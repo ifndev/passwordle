@@ -37,8 +37,6 @@ function App() {
     // Choose a target at random
     const newTarget = passwords[Math.floor(Math.random() * passwords.length)];
     setTarget(newTarget);
-
-    console.log("Target is:" + newTarget);
   }, [setTarget]);
 
   /**
