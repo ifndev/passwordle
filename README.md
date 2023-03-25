@@ -38,6 +38,14 @@ npm run dev
 npm run test
 ```
 
+### Coverage report
+
+```bash
+npm run coverage
+```
+
+The coverage report will be generated at `coverage/index.html`
+
 ### Build
 
 ```bash
