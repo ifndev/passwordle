@@ -7,3 +7,33 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/ifndev/passwordle)
 
 A simple wordle game for passwords. Uses React and Tailwind. Tested with Vitest.
+
+## Recommended VSCode extensions
+
+- [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+## Installation
+
+```bash
+npm install
+```
+
+## Development
+
+```bash
+npm run dev
+```
+
+## Test (with live reload)
+
+```bash
+npm run test
+```
+
+## Build
+
+```bash
+npm run build
+```
