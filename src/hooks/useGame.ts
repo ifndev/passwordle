@@ -75,6 +75,11 @@ function initializeGame(initialArg: { target?: string; tries?: number }) {
   return game;
 }
 
+/**
+ * UseGame
+ * @param initialValue
+ * @returns
+ */
 function useGame(initialValue: {
   target?: string;
   tries?: number;
