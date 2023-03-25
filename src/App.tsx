@@ -1,43 +1,18 @@
-import { useState, useEffect } from "react";
-import passwords from "./helpers/passwords";
+import { useState } from "react";
 import Word from "./components/Word";
-import Tries from "./components/Tries";
+import Guesses from "./components/Guesses";
 import Keyboard from "./components/Keyboard";
 import useKeypress from "./hooks/useKeypress";
 import "./App.css";
+import useGame from "./hooks/useGame";
+import { Guess, LetterValidity, Status } from "./helpers/gameUtils";
 
-function App() {
-  const [target, setTarget] = useState<string>("test");
+function App({ target, maxGuesses }: { target?: string; maxGuesses?: number }) {
   const [input, setInput] = useState<string>("");
-  const [tries, setTries] = useState<string[]>([]);
-  const [validLetters, setValidLetters] = useState<number[]>([]);
-
-  // Initialize alphabet
-  let validKeys: Array<string> = [];
-  // Add all letters a to z to the alphabet, both upper and lower case
-  for (let i = 97; i < 123; i++) {
-    validKeys.push(String.fromCharCode(i));
-    validKeys.push(String.fromCharCode(i).toUpperCase());
-  }
-  // Add all numbers 0 to 9 to the alphabet
-  for (let i = 48; i < 58; i++) {
-    validKeys.push(String.fromCharCode(i));
-  }
-
-  // Iterate over all passwords and add all letters to the alphabet to ensure that all letters and special characters are included
-  passwords.forEach((password) => {
-    password.split("").forEach((letter) => {
-      if (!validKeys.includes(letter)) {
-        validKeys.push(letter);
-      }
-    });
+  const [game, dispatch] = useGame({
+    target: target,
+    tries: maxGuesses,
   });
-
-  useEffect(() => {
-    // Choose a target at random
-    const newTarget = passwords[Math.floor(Math.random() * passwords.length)];
-    setTarget(newTarget);
-  }, [setTarget]);
 
   /**
    * Check if the key is valid
@@ -45,21 +20,24 @@ function App() {
    * @returns boolean
    */
   const keyValid = (key: string) => {
-    return validKeys.includes(key);
+    return game.alphabet.includes(key);
   };
 
-  const onKeyPressed = (key: string) => {
+  const handleKeyPressed = (key: string) => {
+    // Ignore if game ended
+    if (game.status !== Status.PLAYING) return;
+
     if (key === "Backspace") {
       popLetter();
     } else if (key === "Enter") {
-      submitTry();
+      submitGuess();
     } else if (keyValid(key)) {
       pushLetter(key);
     }
   };
 
   const pushLetter = (letter: string) => {
-    if (input.length === target.length) return;
+    if (input.length === game.targetWord.length) return;
     setInput(input + letter);
   };
 
@@ -68,41 +46,62 @@ function App() {
     setInput(input.slice(0, -1));
   };
 
-  const tryValid = () => {
-    return input.length === target.length;
+  const guessValid = () => {
+    return input.length === game.targetWord.length;
   };
 
-  const submitTry = () => {
-    if (tryValid()) {
-      setTries([...tries, input]);
+  const submitGuess = () => {
+    if (guessValid()) {
+      dispatch({ type: "guess", payload: { guess: input } });
       setInput("");
-
-      let validLetters: Array<number> = [];
-      input.split("").forEach((letter, index) => {
-        if (letter.toLowerCase() === target[index].toLowerCase()) {
-          validLetters.push(index);
-        }
-      });
-      setValidLetters(validLetters);
     }
   };
 
-  // Hooks
-  useKeypress(onKeyPressed);
+  // TODO: Move this to the game utils eventually
+  const getGuessedCharacters = () => {
+    const characters: Array<number> = [];
+
+    game.guesses.forEach((guess: Guess) => {
+      guess.validity.forEach((validity, index) => {
+        if (validity === LetterValidity.VALID && !characters.includes(index)) {
+          characters.push(index);
+        }
+      });
+    });
+
+    return characters;
+  };
+
+  const word = () => {
+    if (game.status === Status.PLAYING) {
+      return (
+        <div data-testid="wordinput">
+          <Word
+            targetWord={game.targetWord}
+            input={input}
+            colorize={false}
+            guessedLetters={getGuessedCharacters()}
+          />
+        </div>
+      );
+    }
+  };
+
+  // Hook
+  useKeypress(handleKeyPressed);
 
   return (
     <div className="App flex flex-col gap-10">
       <h1>Passwordle</h1>
-      <div className="board flex flex-col gap-2">
-        <Tries target={target} tries={tries} />
-        <Word
-          targetWord={target}
-          input={input}
-          colorize={false}
-          validLetters={validLetters}
-        />
+      <div className="board flex flex-col gap-2" data-testid="board">
+        <Guesses target={game.targetWord} guesses={game.guesses} />
+        {word()}
       </div>
-      <Keyboard targetWord={target} tries={tries} alphabet={validKeys} />
+      <Keyboard
+        targetWord={game.targetWord}
+        guesses={game.guesses}
+        alphabet={game.alphabet}
+      />
     </div>
   );
 }
