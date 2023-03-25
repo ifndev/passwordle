@@ -27,6 +27,8 @@ jobs:
           cache: "npm"
       - name: Prepare node env
         run: npm ci
+      - name: Build
+        run: npm run build
       - name: Run tests
         run: npm test
       - name: Generate coverage report
