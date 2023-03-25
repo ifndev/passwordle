@@ -1,6 +1,6 @@
 # Passwordle
 
-[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/passwordle.patrickconti.fr.svg)](http://passwordle.patrickconti.fr/)
+[![Website shields.io](https://img.shields.io/website-up-down-green-red/https/passwordle.patrickconti.fr.svg)](https://passwordle.patrickconti.fr/)
 ![License MIT](https://img.shields.io/badge/license-MIT-green)
 ![Codecov](https://img.shields.io/codecov/c/github/ifndev/passwordle)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/ifndev/passwordle/node.js.yml)
@@ -8,31 +8,37 @@
 
 A simple wordle game for passwords. Uses React and Tailwind. Tested with Vitest.
 
-## Recommended VSCode extensions
+## Demo
+
+A live demo is online at [https://passwordle.patrickconti.fr/](https://passwordle.patrickconti.fr/)
+
+## Development
+
+### Recommended VSCode extensions
 
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
 - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
 
-## Installation
+### Installation
 
 ```bash
 npm install
 ```
 
-## Development
+### Development
 
 ```bash
 npm run dev
 ```
 
-## Test (with live reload)
+### Test (with live reload)
 
 ```bash
 npm run test
 ```
 
-## Build
+### Build
 
 ```bash
 npm run build
