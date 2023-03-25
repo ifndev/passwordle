@@ -1,5 +1,10 @@
-steps:
-  - uses: actions/checkout@master
-  - uses: iansu/codecov-action-node@v1
-    with:
-      token: ${{secrets.CODECOV_TOKEN}}
+name: Upload Coverage to Codecov
+on: [push, pull_request]
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: iansu/codecov-action-node@v1
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
