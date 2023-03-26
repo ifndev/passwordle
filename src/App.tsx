@@ -101,6 +101,7 @@ function App({ target, maxGuesses }: { target?: string; maxGuesses?: number }) {
         targetWord={game.targetWord}
         guesses={game.guesses}
         alphabet={game.alphabet}
+        callback={handleKeyPressed}
       />
     </div>
   );

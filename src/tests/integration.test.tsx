@@ -115,26 +115,23 @@ describe("App", () => {
     await user.keyboard("cajoux");
     await user.keyboard("{enter}");
 
-    // Get the keyboard
-    const keyboard = screen.getByTestId("keyboard");
-
     // Get the "u" key
-    const ukey = keyboard.querySelectorAll("div").item(20);
+    const ukey = screen.getByTestId("keyboard-key-u");
     // The "u" key should be marked as existing in the word, so it should have the class "bg-yellow-700"
     expect(ukey).toHaveClass("bg-yellow-700");
 
     // Get the "c" key
-    const ckey = keyboard.querySelectorAll("div").item(2);
+    const ckey = screen.getByTestId("keyboard-key-c");
     // The "c" key should be marked as correct, so it should have the class "bg-green-700"
     expect(ckey).toHaveClass("bg-green-700");
 
     // Get the "j" key
-    const jkey = keyboard.querySelectorAll("div").item(9);
+    const jkey = screen.getByTestId("keyboard-key-j");
     // The "j" key should be marked as wrong, so it should have the class "border-gray-700"
     expect(jkey).toHaveClass("border-gray-700");
 
     // Get the "v" key
-    const vkey = keyboard.querySelectorAll("div").item(21);
+    const vkey = screen.getByTestId("keyboard-key-v");
     // The v key hasn't been tried yet, so it should have none of these classes
     expect(vkey).not.toHaveClass("bg-yellow-700");
     expect(vkey).not.toHaveClass("bg-green-700");
