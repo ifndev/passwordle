@@ -83,7 +83,7 @@ function Letter({
 
   return (
     <div
-      className={`flex aspect-square w-11 text-2xl align-middle justify-center ${getColor()} ${getBorder()} ${getTextColor()} rounded-md z-10`}
+      className={`flex aspect-square w-7 md:w-11 text-sm md:text-2xl align-middle justify-center ${getColor()} ${getBorder()} ${getTextColor()} rounded-md z-10`}
       style={getStyle()}
     >
       {input || placeholder}

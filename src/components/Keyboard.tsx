@@ -72,7 +72,7 @@ function Keyboard({
       return (
         <div
           key={index}
-          className={`border-2 border-gray-400 p-2 ${style} select-none w-8`}
+          className={`border md:border-2 border-gray-400 p-0 md:p-2 ${style} select-none w-5 md:w-8`}
           data-testid={`keyboard-key-${key}`}
           onClick={
             key === "Caps"
