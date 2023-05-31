@@ -149,7 +149,7 @@ function isCharacterMisplaced(
   }
 
   // deduce from the budget further letters that are correctly placed
-  for (let i = index + 1; i < targetWord.length - 1; i++) {
+  for (let i = index + 1; i < targetWord.length; i++) {
     const letter = guessedWord[i];
     if (letter) {
       if (letter.toLowerCase() === targetWord[i].toLowerCase()) {

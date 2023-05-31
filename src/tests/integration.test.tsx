@@ -48,6 +48,7 @@ describe("App", () => {
   it("colorizes the letter depending on the validity", async () => {
     render(<App target="aA$1'!" />);
 
+    const guess = "bac1!'";
     // target : guess
     //   a    :   b  -> wrong     -> bg-gray-700
     //   A    :   a  -> wrongcase -> bg-yellow-700
@@ -55,7 +56,6 @@ describe("App", () => {
     //   1    :   1  -> valid     -> bg-green-700
     //   '    :   !  -> misplaced -> bg-gray-700, border-orange-700
     //   !    :   '  -> misplaced -> bg-gray-700, border-orange-700
-    const guess = "bac1!'";
 
     // The Wordinput component is present in the DOM
     expect(screen.getByTestId("wordinput")).toBeInTheDocument();
@@ -83,6 +83,39 @@ describe("App", () => {
     // Check the border
     expect(letters.item(4)).toHaveClass("border-orange-700");
     expect(letters.item(5)).toHaveClass("border-orange-700");
+  });
+
+  it("does not count a letter as misplaced if it has been exhausted later in the word", async () => {
+    render(<App target="1997" />);
+
+    const guess = "1977";
+
+    // target: guess
+    //   1   :   1  -> valid     -> bg-green-700
+    //   9   :   9  -> valid     -> bg-green-700
+    //   9   :   7  -> wrong     -> bg-gray-700, no border  ---> exhausted right after
+    //   7   :   7  -> valid     -> bg-green-700
+
+    // Type the guess
+    await user.keyboard(guess);
+
+    // Enter
+    await user.keyboard("{enter}");
+
+    // Get the first "word" component in the dom which is not the word input
+    const word = screen.queryAllByTestId("word")[0];
+
+    // Get each letter in the word separately
+    const letters = word.querySelectorAll("div");
+
+    // Check the colors
+    expect(letters.item(0)).toHaveClass("bg-green-700");
+    expect(letters.item(1)).toHaveClass("bg-green-700");
+    expect(letters.item(2)).toHaveClass("bg-gray-700");
+    expect(letters.item(3)).toHaveClass("bg-green-700");
+
+    // Check the border
+    expect(letters.item(2)).not.toHaveClass("border-orange-700");
   });
 
   it("shows a placeholder if a letter is empty but has been guessed", async () => {
