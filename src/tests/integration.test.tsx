@@ -2,6 +2,7 @@ import { describe, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
+import { ANIMTIME } from "../constants/settings";
 
 const user = userEvent.setup();
 
@@ -72,6 +73,9 @@ describe("App", () => {
     // Get each letter in the word separately
     const letters = word.querySelectorAll("div");
 
+    // Wait for the animation to be done
+    await new Promise((r) => setTimeout(r, (guess.length + 1) * ANIMTIME));
+
     // Check the colors
     expect(letters.item(0)).toHaveClass("bg-gray-700");
     expect(letters.item(1)).toHaveClass("bg-yellow-700");
@@ -107,6 +111,9 @@ describe("App", () => {
 
     // Get each letter in the word separately
     const letters = word.querySelectorAll("div");
+
+    // Wait for the animation to be done
+    await new Promise((r) => setTimeout(r, (guess.length + 1) * ANIMTIME));
 
     // Check the colors
     expect(letters.item(0)).toHaveClass("bg-green-700");

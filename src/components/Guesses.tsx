@@ -4,9 +4,11 @@ import { Guess } from "../helpers/gameUtils";
 function Guesses({
   target,
   guesses,
+  isRevealing,
 }: {
   target: string;
   guesses: Array<Guess>;
+  isRevealing?: boolean;
 }) {
   const triesList = guesses.map((guess, index) => {
     return (
@@ -16,6 +18,7 @@ function Guesses({
         input={guess.guessedWord}
         colorize={true}
         validity={guess.validity}
+        isRevealing={isRevealing && index === guesses.length - 1}
       />
     );
   });
