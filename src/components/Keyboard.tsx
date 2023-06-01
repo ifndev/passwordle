@@ -72,7 +72,7 @@ function Keyboard({
       return (
         <div
           key={index}
-          className={`border-2 border-gray-400 p-2 ${style} select-none w-8`}
+          className={`border-2 border-gray-400 p-2 ${style} select-none h-12 md:h-auto w-full md:w-8 justify-center align-middle`}
           data-testid={`keyboard-key-${key}`}
           onClick={
             key === "Caps"
@@ -95,14 +95,17 @@ function Keyboard({
 
   const keys = layout.map((line, index) => {
     return (
-      <div className="flex flex-row justify-center gap-2">
+      <div className="flex flex-row justify-center gap-1 md:gap-2 w-full">
         {getKeyboardLine(line)}
       </div>
     );
   });
 
   return (
-    <div className="flex flex-col justify-center gap-2" data-testid="keyboard">
+    <div
+      className="flex flex-col justify-center gap-1 md:gap-2 w-full"
+      data-testid="keyboard"
+    >
       {keys}
     </div>
   );

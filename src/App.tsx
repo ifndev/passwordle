@@ -103,7 +103,7 @@ function App({ target, maxGuesses }: { target?: string; maxGuesses?: number }) {
   useKeypress(handleKeyPressed);
 
   return (
-    <div className="App flex flex-col gap-10">
+    <div className="App flex flex-col gap-10 w-full h-full">
       <h1>Passwordle</h1>
       <div className="board flex flex-col gap-2" data-testid="board">
         <Guesses
